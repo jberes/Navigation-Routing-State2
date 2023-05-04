@@ -1,0 +1,53 @@
+@page "/customer_order_history_cust-id/{customerId?}"
+@using NorthwindCloud
+@inject INorthwindCloudService northwindCloudService
+
+<div class="row-layout customer-order-history-cust-id-container">
+    <div class="column-layout group">
+        <h5 class="h5">
+            Customer Orders History for @customerId
+        </h5>
+        <IgbGrid Data="northwindCloudCustomerOrdersResult" PrimaryKey="CustomerID" DisplayDensity="DisplayDensity.Cosy" RowSelection="GridSelectionMode.Multiple" RowEditable="true" Moving="true" AllowFiltering="true" FilterMode="FilterMode.ExcelStyleFilter" AutoGenerate="false" class="ig-typography grid" customer_order_history_cust-id-scope>
+            <IgbGridToolbar>
+                <IgbGridToolbarActions>
+                    <IgbGridToolbarPinning></IgbGridToolbarPinning>
+                    <IgbGridToolbarHiding></IgbGridToolbarHiding>
+                    <IgbGridToolbarExporter></IgbGridToolbarExporter>
+                    <IgbGridToolbarAdvancedFiltering></IgbGridToolbarAdvancedFiltering>
+                </IgbGridToolbarActions>
+                <IgbGridToolbarTitle>Northwind Traders</IgbGridToolbarTitle>
+            </IgbGridToolbar>
+            <IgbColumn Field="OrderID" DataType="GridColumnDataType.Number" Header="orderID" Groupable="true" Sortable="true" Resizable="true"></IgbColumn>
+            <IgbColumn Field="CustomerID" DataType="GridColumnDataType.String" Header="customerID" Groupable="true" Sortable="true" Resizable="true"></IgbColumn>
+            <IgbColumn Field="EmployeeID" DataType="GridColumnDataType.Number" Header="employeeID" Groupable="true" Sortable="true" Resizable="true"></IgbColumn>
+            <IgbColumn Field="OrderDate" DataType="GridColumnDataType.Date" Header="orderDate" Groupable="true" Sortable="true" Resizable="true"></IgbColumn>
+            <IgbColumn Field="RequiredDate" DataType="GridColumnDataType.Date" Header="requiredDate" Groupable="true" Sortable="true" Resizable="true"></IgbColumn>
+            <IgbColumn Field="ShippedDate" DataType="GridColumnDataType.Date" Header="shippedDate" Groupable="true" Sortable="true" Resizable="true"></IgbColumn>
+            <IgbColumn Field="ShipVia" DataType="GridColumnDataType.Number" Header="shipVia" Groupable="true" Sortable="true" Resizable="true"></IgbColumn>
+            <IgbColumn Field="Freight" DataType="GridColumnDataType.Number" Header="freight" Groupable="true" Sortable="true" Resizable="true" HasSummary="true"></IgbColumn>
+            <IgbColumn Field="ShipName" DataType="GridColumnDataType.String" Header="shipName" Groupable="true" Sortable="true" Resizable="true"></IgbColumn>
+            <IgbColumn Field="ShipAddress" DataType="GridColumnDataType.String" Header="shipAddress" Groupable="true" Sortable="true" Resizable="true"></IgbColumn>
+            <IgbColumn Field="ShipCity" DataType="GridColumnDataType.String" Header="shipCity" Groupable="true" Sortable="true" Resizable="true"></IgbColumn>
+            <IgbColumn Field="ShipRegion" DataType="GridColumnDataType.String" Header="shipRegion" Groupable="true" Sortable="true" Resizable="true"></IgbColumn>
+            <IgbColumn Field="ShipPostalCode" DataType="GridColumnDataType.String" Header="shipPostalCode" Groupable="true" Sortable="true" Resizable="true"></IgbColumn>
+            <IgbColumn Field="ShipCountry" DataType="GridColumnDataType.String" Header="shipCountry" Groupable="true" Sortable="true" Resizable="true" HasSummary="true"></IgbColumn>
+            <IgbActionStrip>
+                <IgbGridPinningActions></IgbGridPinningActions>
+                <IgbGridEditingActions AddRow="true"></IgbGridEditingActions>
+            </IgbActionStrip>
+        </IgbGrid>
+    </div>
+</div>
+
+@code {
+
+    [Parameter]
+    public string customerId { get; set; }
+
+    private List<CustomerOrdersResult> northwindCloudCustomerOrdersResult = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        northwindCloudCustomerOrdersResult = await northwindCloudService.GetCustomerOrdersResult(customerId);
+    }
+}

@@ -1,0 +1,46 @@
+@page "/customer-grid-chart"
+@using NorthwindCloud
+@inject INorthwindCloudService northwindCloudService
+@inject SelectedCustomer SelectedCustomer
+
+
+<div class="column-layout customer-grid-chart-container">
+    <div class="row-layout group">
+        <div class="column-layout group_1">
+            <p class="typography__body-1 text">
+                Customer ID @SelectedCustomer.CustomerId
+            </p>
+        </div>
+        <div class="column-layout group_2">
+            <IgbInput @bind-value="@SelectedCustomer.CustomerId" Change="RefreshData" Required="true" Outlined="true" class="input" customer-grid-chart-scope></IgbInput>
+        </div>
+    </div>
+    <div class="row-layout group_3">
+        <div class="column-layout group_4">
+           <OrdersGrid value="@SelectedCustomer.CustomerId" />
+        </div>
+        <div class="column-layout group_4">
+            <IgbCategoryChart DataSource="northwindCloudCustOrderHistResult" ComputedPlotAreaMarginMode="ComputedPlotAreaMarginMode.Series" class="category-chart" customer-grid-chart-scope></IgbCategoryChart>
+        </div>
+    </div>
+</div>
+
+@code {
+    private string value = "ALFKI";
+
+
+    private List<CustOrderHistResult> northwindCloudCustOrderHistResult = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        RefreshData();
+    }
+
+    private async Task RefreshData()
+    {
+        northwindCloudCustOrderHistResult = await northwindCloudService.GetCustOrderHistResult(SelectedCustomer.CustomerId);
+        StateHasChanged();
+
+    }
+
+}

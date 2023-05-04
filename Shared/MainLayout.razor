@@ -1,0 +1,109 @@
+@inherits LayoutComponentBase
+@inject NavigationManager NavigationManager
+
+<div class="column-layout master-view-container">
+    <IgbNavbar class="navbar" master_view-scope>
+        <IgbIconButton slot="start" Variant="IconButtonVariant.Flat" @onclick="@(e => _navDrawer!.ToggleAsync())">
+            <span class="material-icons">
+                menu
+            </span>
+            <IgbRipple></IgbRipple>
+        </IgbIconButton>
+        <div class="row-layout group">
+            <h6 class="h6">
+                Navigation, Routing &amp; State
+            </h6>
+        </div>
+        <IgbIconButton slot="end" Variant="IconButtonVariant.Flat">
+            <span class="material-icons">
+                search
+            </span>
+            <IgbRipple></IgbRipple>
+        </IgbIconButton>
+        <IgbIconButton slot="end" Variant="IconButtonVariant.Flat">
+            <span class="material-icons">
+                favorite
+            </span>
+            <IgbRipple></IgbRipple>
+        </IgbIconButton>
+        <IgbIconButton slot="end" Variant="IconButtonVariant.Flat">
+            <span class="material-icons">
+                more_vert
+            </span>
+            <IgbRipple></IgbRipple>
+        </IgbIconButton>
+    </IgbNavbar>
+    <div class="row-layout group_1">
+        <IgbNavDrawer Open="true" Position="NavDrawerPosition.Relative" @ref="_navDrawer" class="nav-drawer" master_view-scope>
+            <IgbNavDrawerItem @onclick="@(e => Navigate(""))">
+                <span slot="icon">
+                    <span class="material-icons icon">
+                        home
+                    </span>
+                    <IgbRipple></IgbRipple>
+                </span>
+                <div slot="content">Customers</div>
+            </IgbNavDrawerItem>
+            <IgbNavDrawerItem @onclick="@(e => Navigate("reports"))">
+                <span slot="icon">
+                    <span class="material-icons icon">
+                        dns
+                    </span>
+                    <IgbRipple></IgbRipple>
+                </span>
+                <div slot="content">Reports</div>
+            </IgbNavDrawerItem>
+            <IgbNavDrawerItem @onclick="@(e => Navigate("customer_orders_cust-id"))">
+                <span slot="icon">
+                    <span class="material-icons icon">
+                        dns
+                    </span>
+                    <IgbRipple></IgbRipple>
+                </span>
+                <div slot="content">Customer Orders (custId)</div>
+            </IgbNavDrawerItem>
+            <IgbNavDrawerItem @onclick="@(e => Navigate("customer_order_history_cust-id"))">
+                <span slot="icon">
+                    <span class="material-icons icon">
+                        dns
+                    </span>
+                    <IgbRipple></IgbRipple>
+                </span>
+                <div slot="content">Customer Order History (custId)</div>
+            </IgbNavDrawerItem>
+
+
+            <IgbNavDrawerItem @onclick="@(e => Navigate("customer-grid-chart"))">
+                <span slot="icon">
+                    <span class="material-icons icon">
+                        dns
+                    </span>
+                    <IgbRipple></IgbRipple>
+                </span>
+                <div slot="content">Customer Grid Chart</div>
+            </IgbNavDrawerItem>
+
+
+@*            <IgbNavDrawerItem @onclick="@(e => Navigate("playground"))">
+                <span slot="icon">
+                    <span class="material-icons icon">
+                        dns
+                    </span>
+                    <IgbRipple></IgbRipple>
+                </span>
+                <div slot="content">Playground</div>
+            </IgbNavDrawerItem>*@
+        </IgbNavDrawer>
+        <div class="view-container">
+            @Body
+        </div>
+    </div>
+</div>
+
+@code {
+    private IgbNavDrawer? _navDrawer;
+    private void Navigate(string path)
+    {
+        NavigationManager.NavigateTo(path);
+    }
+}

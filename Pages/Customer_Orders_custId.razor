@@ -1,0 +1,26 @@
+@page "/customer_orders_cust-id/{customerId?}"
+@using NorthwindCloud
+@inject INorthwindCloudService northwindCloudService
+@inject SelectedCustomer SelectedCustomer
+
+<div class="row-layout customer-orders-cust-id-container">
+    <div class="column-layout group">
+        <h5 class="h5">
+            Order History for @SelectedCustomer.CustomerId
+        </h5>
+        <IgbCategoryChart DataSource="northwindCloudCustOrderHistResult" ComputedPlotAreaMarginMode="ComputedPlotAreaMarginMode.Series" class="category-chart" customer_orders_cust-id-scope></IgbCategoryChart>
+    </div>
+</div>
+
+@code {
+
+    [Parameter]
+    public string customerId { get; set; }
+
+    private List<CustOrderHistResult> northwindCloudCustOrderHistResult = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        northwindCloudCustOrderHistResult = await northwindCloudService.GetCustOrderHistResult(SelectedCustomer.CustomerId);
+    }
+}

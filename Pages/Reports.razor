@@ -1,0 +1,21 @@
+@page "/reports"
+@using NorthwindCloud
+@inject INorthwindCloudService northwindCloudService
+
+<div class="column-layout reports-container">
+    <div class="column-layout group">
+        <h5 class="h5">
+            Products Above Average Price
+        </h5>
+        <IgbCategoryChart DataSource="northwindCloudProductsAboveAveragePrice" ComputedPlotAreaMarginMode="ComputedPlotAreaMarginMode.Series" class="category-chart" reports-scope></IgbCategoryChart>
+    </div>
+</div>
+
+@code {
+    private List<ProductsAboveAveragePrice> northwindCloudProductsAboveAveragePrice = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        northwindCloudProductsAboveAveragePrice = await northwindCloudService.GetProductsAboveAveragePrice();
+    }
+}

@@ -1,0 +1,45 @@
+@page "/"
+@using NorthwindCloud
+@inject INorthwindCloudService northwindCloudService
+
+<div class="row-layout customers-container">
+    <div class="column-layout group">
+        <h5 class="h5">
+            Customers
+        </h5>
+        <IgbGrid Data="northwindCloudCustomer" PrimaryKey="CustomerID" DisplayDensity="DisplayDensity.Cosy" RowSelection="GridSelectionMode.Multiple" RowEditable="true" Moving="true" AllowFiltering="true" FilterMode="FilterMode.ExcelStyleFilter" AutoGenerate="false" class="ig-typography grid" customers-scope>
+            <IgbGridToolbar>
+                <IgbGridToolbarActions>
+                    <IgbGridToolbarPinning></IgbGridToolbarPinning>
+                    <IgbGridToolbarHiding></IgbGridToolbarHiding>
+                    <IgbGridToolbarExporter></IgbGridToolbarExporter>
+                    <IgbGridToolbarAdvancedFiltering></IgbGridToolbarAdvancedFiltering>
+                </IgbGridToolbarActions>
+                <IgbGridToolbarTitle>Northwind Traders</IgbGridToolbarTitle>
+            </IgbGridToolbar>
+            <IgbColumn Field="CustomerID" DataType="GridColumnDataType.String" Header="Customer ID" Groupable="true" Sortable="true" Resizable="true" HasSummary="true"></IgbColumn>
+            <IgbColumn Field="CompanyName" DataType="GridColumnDataType.String" Header="Company Name" Width="239px" Groupable="true" Sortable="true" Resizable="true"></IgbColumn>
+            <IgbColumn Field="ContactName" DataType="GridColumnDataType.String" Header="Contact Name" Width="173px" Groupable="true" Sortable="true" Resizable="true"></IgbColumn>
+            <IgbColumn Field="ContactTitle" DataType="GridColumnDataType.String" Header="Contact Title" Width="194px" Groupable="true" Sortable="true" Resizable="true"></IgbColumn>
+            <IgbColumn Field="Address" DataType="GridColumnDataType.String" Header="Address" Width="169px" Groupable="true" Sortable="true" Resizable="true"></IgbColumn>
+            <IgbColumn Field="City" DataType="GridColumnDataType.String" Header="City" Groupable="true" Sortable="true" Resizable="true"></IgbColumn>
+            <IgbColumn Field="Region" DataType="GridColumnDataType.String" Header="Region" Width="117px" Groupable="true" Sortable="true" Resizable="true"></IgbColumn>
+            <IgbColumn Field="Country" DataType="GridColumnDataType.String" Header="Country" Groupable="true" Sortable="true" Resizable="true"></IgbColumn>
+            <IgbColumn Field="Phone" DataType="GridColumnDataType.String" Header="Phone" Groupable="true" Sortable="true" Resizable="true"></IgbColumn>
+            <IgbColumn Field="Fax" DataType="GridColumnDataType.String" Header="Fax" Groupable="true" Sortable="true" Resizable="true"></IgbColumn>
+            <IgbActionStrip>
+                <IgbGridPinningActions></IgbGridPinningActions>
+                <IgbGridEditingActions AddRow="true"></IgbGridEditingActions>
+            </IgbActionStrip>
+        </IgbGrid>
+    </div>
+</div>
+
+@code {
+    private List<Customer> northwindCloudCustomer = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        northwindCloudCustomer = await northwindCloudService.GetCustomer();
+    }
+}

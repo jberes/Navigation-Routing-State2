@@ -1,0 +1,21 @@
+﻿@using NorthwindCloud
+@inject INorthwindCloudService northwindCloudService
+
+<IgbGrid Data="northwindCloudCustomerOrdersResult" PrimaryKey="OrderID" DisplayDensity="DisplayDensity.Cosy" AllowFiltering="true" FilterMode="FilterMode.ExcelStyleFilter" AutoGenerate="false" class="ig-typography grid" customer-grid-chart-scope>
+    <IgbColumn Field="ShipName" DataType="GridColumnDataType.String" Header="shipName" Width="148px" Sortable="true" Selectable="false"></IgbColumn>
+    <IgbColumn Field="OrderID" DataType="GridColumnDataType.Number" Header="orderID" Sortable="true" Selectable="false"></IgbColumn>
+    <IgbColumn Field="ShipCountry" DataType="GridColumnDataType.String" Header="shipCountry" Sortable="true" Selectable="false"></IgbColumn>
+</IgbGrid>
+
+@code {
+
+    [Parameter]
+    public string value { get; set; }
+
+    private List<CustomerOrdersResult> northwindCloudCustomerOrdersResult = new();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        northwindCloudCustomerOrdersResult = await northwindCloudService.GetCustomerOrdersResult(value);
+    }
+}

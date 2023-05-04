@@ -1,0 +1,25 @@
+﻿@page "/multipage/{param1}/{param2}/{param3}"
+
+
+<h1>@param1</h1>
+<OrdersGrid value="@param1" />
+
+<h1>@param2</h1>
+<OrdersGrid value="@param2" />
+
+
+<h1>@param3</h1>
+<OrdersGrid value="@param3" />
+
+@code {
+
+    [Parameter]
+    public string param1 { get; set; }
+
+    [Parameter]
+    public string param2 { get; set; }
+
+    [Parameter]
+    public string param3 { get; set; }
+
+}
